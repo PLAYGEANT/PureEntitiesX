@@ -55,6 +55,7 @@ class Creeper extends WalkingMonster implements Explosive{
 		$ev = new ExplosionPrimeEvent($this, 3);
 		$ev->call();
 		if(!$ev->isCancelled()){
+			if($this->isAlive() && $this->getHealth()>0){
 			if($this->isPowered()) $ev->setForce($ev->getForce() * 2);
 			$explosion = new Explosion($this, $ev->getForce(), $this);
 			$ev->setBlockBreaking($this->explodeBlocks); // this is configuration!
@@ -62,6 +63,7 @@ class Creeper extends WalkingMonster implements Explosive{
 				$explosion->explodeA();
 			}
 			$explosion->explodeB();
+			}
 		}
 		$this->close();
 	}
